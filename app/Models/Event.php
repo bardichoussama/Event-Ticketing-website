@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
+    public function recurrences()
+    {
+        return $this->hasMany(Recurrence::class);
+    }
 }
