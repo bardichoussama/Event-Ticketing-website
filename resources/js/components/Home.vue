@@ -14,20 +14,25 @@
   
   <script setup>
   import { ref, onMounted } from 'vue';
-  import axios from 'axios';
+  import apiClient from '../../axios'; 
   
-  const events = ref([]); // To hold the events data
+  const events = ref([]); 
   
-  // Fetch events when the component is mounted
-  onMounted(async () => {
+
+  const getEvents = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/events');
-      events.value = response.data; // Populate the events array with the response data
+      const response = await apiClient.get('/events'); 
+      events.value = response.data; 
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error('Error fetching events:', error); 
     }
+  };
+  
+  onMounted(() => {
+    getEvents(); 
   });
   </script>
+  
   
   <style scoped>
   /* Add some styles here if needed */
