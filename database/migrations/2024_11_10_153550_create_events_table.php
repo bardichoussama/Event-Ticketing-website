@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('category');
-            $table->decimal('regular_price', 8, 2); // Improved decimal precision
-            $table->decimal('discount_price', 8, 2); // Improved decimal precision
+            $table->decimal('regular_price', 8, 2); 
+            $table->decimal('discount_price', 8, 2);
+            $table->string('image')->nullable(); 
+            $table->string('address')->nullable(); 
             $table->timestamps();
         });
     }
