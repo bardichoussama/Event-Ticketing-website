@@ -15,7 +15,7 @@ const handleLogin = async () => {
   try {
     await authStore.login(email.value, password.value);
     alert('Logged in successfully!');
-    router.push('/home'); // Redirect to home page
+    router.push('/'); // Redirect to home page
   } catch (error) {
     alert('Login failed. Please check your credentials.');
   }
@@ -23,10 +23,10 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+  <div class=" flex gap-4 bg-violet-50 p-4 gap-4w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] ">
     <!-- Left Side (Form) -->
-    <div class="flex items-center justify-center py-12">
-      <div class="mx-auto grid w-[350px] gap-6">
+    <div class="flex items-center justify-center py-12 bg-white rounded-md ">
+      <div class="mx-auto grid w-[350px] gap-6 ">
         <div class="grid gap-2 text-center">
           <h1 class="text-3xl font-bold">Login</h1>
           <p class="text-muted-foreground">
@@ -47,7 +47,7 @@ const handleLogin = async () => {
             </div>
             <Input id="password" v-model="password" type="password" required />
           </div>
-          <Button type="submit" class="w-full text-white">Login</Button>
+          <Button type="submit" class="w-full bg-primary text-white">Login</Button>
           <Button variant="outline" class="w-full">Login with Google</Button>
         </form>
         <div class="mt-4 text-center text-sm">
@@ -58,13 +58,13 @@ const handleLogin = async () => {
     </div>
 
     <!-- Right Side (Image) -->
-    <div class="hidden bg-muted lg:block">
+    <div class="hidden rounded-md bg-muted lg:block">
       <img
-        src=""
+        src="../../../../public/assets/imgs/bg-login.jpg"
         alt="Login Image"
         width="1920"
         height="1080"
-        class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        class=" rounded-md h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
       >
     </div>
   </div>

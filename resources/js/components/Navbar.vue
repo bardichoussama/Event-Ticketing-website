@@ -29,6 +29,8 @@
         </nav>
       </SheetContent>
     </Sheet>
+    <router-link to="/login" class="flex items-center gap-2 text-lg font-semibold"></router-link>
+   
 
     <!-- Search & User Menu -->
     <div class="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
@@ -55,7 +57,7 @@
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <router-link to="/home" class="w-full">Home</router-link>
+            <router-link to="/" class="w-full">Home</router-link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <router-link to="/user/purchases" class="w-full">My Purchases</router-link>
@@ -78,7 +80,7 @@
         </router-link>
         <router-link
           to="/register"
-          class="text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white px-4 py-2 rounded-lg"
+          class="text-sm text-white bg-primary hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white px-4 py-2 rounded-lg"
         >
           Register
         </router-link>

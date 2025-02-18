@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-vue-next";
 import { useEventStore } from "../../stores/event";
+import{useCategoryStore} from "../../stores/category";
 import EventCard from "../../components/EventCard.vue";
 import Slider from "../../components/Slider.vue";
 import { Calendar } from "@/components/ui/calendar";
@@ -31,6 +32,7 @@ import {
 import { format } from "date-fns";
 
 const eventStore = useEventStore();
+const categoryStore = useCategoryStore();
 
 // Filter states
 const searchQuery = ref("");
@@ -51,6 +53,12 @@ onMounted(() => {
 </script>
 
 <template>
+   <router-link
+          to="/edit/profile"
+          class="text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white px-4 py-2 rounded-lg"
+        >
+          Login
+        </router-link>
   <div class="container mx-auto px-4 py-6 space-y-6">
     <!-- Slider Section -->
     <Slider class="w-full h-64 rounded-lg mb-8" />
