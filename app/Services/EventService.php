@@ -21,4 +21,9 @@ class EventService
 
         return $this->eventRepository->getFilteredEvents($filters);
     }
+    
+    public function getEventDetails(int $recurrenceId)
+    {
+        return $this->eventRepository->findRecurrenceById($recurrenceId);
+    }
 }

@@ -20,6 +20,17 @@ class EventController extends Controller
         $events = $this->eventService->getEvents($request->all());
         return response()->json($events);
     }
+    public function show(int $id)
+    {
+        $eventDetails = $this->eventService->getEventDetails($id);
+
+        if (!$eventDetails) {
+            return response()->json(['error' => 'Event not found'], 404);
+        }
+
+        return response()->json($eventDetails);
+    }
+   
     
 }
 

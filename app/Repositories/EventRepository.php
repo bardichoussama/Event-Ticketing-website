@@ -37,4 +37,8 @@ class EventRepository
 
         return $query->get();
     }
+    public function findRecurrenceById(int $id)
+    {
+        return Recurrence::with('event')->find($id);
+    }
 }
