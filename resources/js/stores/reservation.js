@@ -17,8 +17,8 @@ export const useReservationStore = defineStore('reservation', () => {
         discount_tickets: discountTickets,
       });
 
-      console.log("Reservation successful:", response.data);
-      alert("Reservation successful!");
+    
+   
 
     } catch (err) {
       console.error("Error making reservation:", err);

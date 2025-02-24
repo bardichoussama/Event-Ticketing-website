@@ -16,6 +16,14 @@ export const useEventDetailsStore = defineStore('eventDetails', () => {
 
       eventDetails.value = {
         title: data.event.title,
+        description: data.event.description,
+        image: data.event.image,
+        address: data.event.address,
+        regular_price: data.event.regular_price,
+        discount_price: data.event.discount_price,
+        event_date: data.event_timestamp,
+        room_code: data.room_code,
+            
       };
 
     } catch (err) {

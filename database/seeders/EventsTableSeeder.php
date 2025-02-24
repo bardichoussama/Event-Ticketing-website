@@ -15,7 +15,10 @@ class EventsTableSeeder extends Seeder
         if ($category) {
             Event::create([
                 'title' => 'Sample Event',
-                'category_id' => $category->id,  // Assuming you added a categories table
+                'description' => 'This is a sample event description.',
+                'image' => 'sample-event.jpg', // Make sure this path is accessible
+                'address' => '123 Event Street, City',
+                'category_id' => $category->id,
                 'regular_price' => 100.00,
                 'discount_price' => 80.00,
             ]);

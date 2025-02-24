@@ -17,4 +17,8 @@ class Reservation extends Model
     {
         return $this->belongsTo(Recurrence::class);
     }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }
