@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
+    protected $fillable = ['title', 'category', 'regular_price', 'discount_price'];
+
     public function recurrences()
     {
         return $this->hasMany(Recurrence::class);

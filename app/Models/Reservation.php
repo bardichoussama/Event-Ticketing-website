@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id', 'recurrence_id', 'reservation_date'];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function recurrence()
+    {
+        return $this->belongsTo(Recurrence::class);
+    }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

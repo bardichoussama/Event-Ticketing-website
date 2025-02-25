@@ -1,3 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 100% 98%; /* Light Lavender */
+    --foreground: 260 90% 10%;
+
+    --muted: 260 50% 90%;
+    --muted-foreground: 260 30% 40%;
+
+    --popover: 260 100% 98%;
+    --popover-foreground: 260 90% 10%;
+
+    --card: 260 100% 97%;
+    --card-foreground: 260 90% 15%;
+
+    --border: 260 60% 75%;
+    --input: 260 60% 75%;
+
+    --primary: 265 90% 45%; /* Vibrant Purple */
+    --primary-foreground: 260 100% 98%;
+
+    --secondary: 270 60% 85%;
+    --secondary-foreground: 265 80% 20%;
+
+    --accent: 270 65% 80%;
+    --accent-foreground: 265 85% 25%;
+
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    --ring: 265 80% 50%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 270 90% 50%;
+    --chart-2: 260 85% 40%;
+    --chart-3: 280 80% 35%;
+    --chart-4: 250 75% 60%;
+    --chart-5: 245 70% 55%;
+  }
+
+  .dark {
+    --background: 260 90% 10%;
+    --foreground: 260 100% 98%;
+
+    --muted: 260 50% 20%;
+    --muted-foreground: 260 30% 70%;
+
+    --popover: 260 90% 10%;
+    --popover-foreground: 260 100% 98%;
+
+    --card: 260 80% 15%;
+    --card-foreground: 260 90% 90%;
+
+    --border: 260 60% 25%;
+    --input: 260 60% 25%;
+
+    --primary: 265 80% 55%; /* Lighter Vibrant Purple */
+    --primary-foreground: 260 100% 98%;
+
+    --secondary: 270 60% 30%;
+    --secondary-foreground: 265 80% 90%;
+
+    --accent: 270 65% 35%;
+    --accent-foreground: 265 85% 95%;
+
+    --destructive: 0 60% 40%;
+    --destructive-foreground: 0 100% 95%;
+
+    --ring: 265 70% 65%;
+
+    --chart-1: 280 70% 60%;
+    --chart-2: 270 65% 50%;
+    --chart-3: 260 60% 45%;
+    --chart-4: 250 55% 70%;
+    --chart-5: 245 50% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
