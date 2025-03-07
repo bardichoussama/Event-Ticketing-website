@@ -12,6 +12,10 @@ class CategoryService
     {
         $this->categoryRepository = $eventRepository;
     }
+     public function getAll()
+    {
+        return $this->categoryRepository->getAll();
+    }
 
    
 }

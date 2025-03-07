@@ -34,6 +34,20 @@ class EventRepository
                 $filters['end_date']
             ]);
         }
+          // Filter by event category
+          if (!empty($filters['category'])) {
+            $query->whereHas('event', function($q) use ($filters) {
+                $q->where('category_id', $filters['category']);
+            });
+        }
+        if (!empty($filters['time'])) {
+            $currentDate = now();
+            if ($filters['time'] == 'upcoming') {
+                $query->where('event_timestamp', '>', $currentDate);
+            } elseif ($filters['time'] == 'past') {
+                $query->where('event_timestamp', '<', $currentDate);
+            }
+        }
 
         return $query->get();
     }
