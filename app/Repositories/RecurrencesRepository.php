@@ -39,4 +39,9 @@ class EventRepository
 
         return $query->get();
     }
+    public function reccurenceRooms($id)
+    {
+        return $this->with;
+       
+    }
 }

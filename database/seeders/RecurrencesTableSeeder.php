@@ -16,7 +16,7 @@ class RecurrencesTableSeeder extends Seeder
 
         Recurrence::create([
             'event_id' => $event->id,
-            'room_code' => $room->id,
+            'room_id' => $room->id,
             'event_timestamp' => now()->addDays(rand(1, 30)),
         ]);
     }

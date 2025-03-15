@@ -13,6 +13,7 @@ import EventCard from "../../components/EventCard.vue";
 import Slider from "../../components/Slider.vue";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-vue-next";
+import { LoaderPinwheel } from "lucide-vue-next";
 
 import {
   Popover,
@@ -149,16 +150,18 @@ onMounted(() => {
   </div>
 
   <!-- Events Section -->
-  <div class="mx-1">
+  <div class="mx-1" v-if="eventStore.events.length">
     <h2 class="text-sm font-semibold mb-1.5 text-gray-800">Event Schedule</h2>
     <!-- Events Grid -->
     <div v-if="eventStore.events.length" class="flex flex-col bg-violet-50 rounded-md shadow-sm p-3 text-xs">
       <EventCard v-for="event in eventStore.events" :key="event.id" :event="event" />
     </div>
 
-    <!-- Loading and Error States -->
-    <p v-if="eventStore.loading" class="text-center text-gray-500 text-xs">Loading events...</p>
-    <p v-if="eventStore.error" class="text-center text-red-500 text-xs">{{ eventStore.error }}</p>
+ 
   </div>
+  <div v-else class="flex justify-center items-center h-96">
+    <LoaderPinwheel class="animate-spin text-primary h-10 w-10" />
+  </div>
+  <p v-if="eventStore.error" class="text-center text-red-500 text-xs">{{ eventStore.error }}</p>
 </div>
 </template>

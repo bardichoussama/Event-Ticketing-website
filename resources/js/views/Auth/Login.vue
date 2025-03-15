@@ -15,7 +15,7 @@ const handleLogin = async () => {
   try {
     await authStore.login(email.value, password.value);
     alert('Logged in successfully!');
-    router.push('/'); // Redirect to home page
+    router.push('/');
   } catch (error) {
     alert('Login failed. Please check your credentials.');
   }
