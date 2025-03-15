@@ -32,6 +32,9 @@ class ReservationService
         if (!$recurrence) {
             throw new Exception("Recurrence not found.");
         }
+        if(now() > $recurrence->event_timestamp){
+            throw new Exception("Event has already ended.");
+        }
 
         $roomCapacity = $recurrence->room->capacity;
         $existingTickets = $this->ticketRepository->countTicketsForRecurrence($eventId);

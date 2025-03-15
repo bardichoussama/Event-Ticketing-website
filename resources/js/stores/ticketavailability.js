@@ -5,7 +5,7 @@ import apiClient from '../../axios';
 export const useTicketAvailabilityStore = defineStore('ticketAvailability', () => {
     const loading = ref(false);
     const error = ref(null);
-    const ticketAvailability = ref({ availableSeats: 0 }); 
+    const ticketAvailability = ref({ availableSeats: 0 });
     
     const checkAvailability = async (eventId) => {
         loading.value = true;
@@ -20,11 +20,20 @@ export const useTicketAvailabilityStore = defineStore('ticketAvailability', () =
             loading.value = false;
         }
     };
-
+    
+    // Add method to update available seats count after reservation
+    const updateAvailableSeats = (amount) => {
+        ticketAvailability.value = {
+            ...ticketAvailability.value,
+            availableSeats: ticketAvailability.value.availableSeats + amount
+        };
+    };
+    
     return {
         checkAvailability,
         ticketAvailability,
         loading,
-        error
+        error,
+        updateAvailableSeats // Export the new method
     };
 });

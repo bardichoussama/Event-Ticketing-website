@@ -61,4 +61,5 @@ class EventRepository
 {
     return Recurrence::with('event', 'room')->find($id);
 }
+
 }
