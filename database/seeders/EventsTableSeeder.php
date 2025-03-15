@@ -14,7 +14,7 @@ class EventsTableSeeder extends Seeder
 
         if ($category) {
             Event::create([
-                'title' => 'Sample Event',
+                'title' => 'Marrakech Food Festival',
                 'description' => 'This is a sample event description.',
                 'image' => 'sample-event.jpg', // Make sure this path is accessible
                 'address' => '123 Event Street, City',

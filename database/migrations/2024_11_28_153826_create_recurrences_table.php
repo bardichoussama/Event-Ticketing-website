@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('recurrences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
-            $table->foreignId('room_code')->constrained('rooms')->onDelete('cascade'); 
+            $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade'); 
             $table->dateTime('event_timestamp'); 
             $table->timestamps();
         });

@@ -12,13 +12,16 @@ export const useCategoryStore = defineStore('category', () => {
       error.value = null;
       try {
         const response = await apiClient.get('/categories');
-
+    
+        console.log("API Response:", response.data); 
+    
         categories.value = response.data.map(category => ({
           id: category.id, 
-          title: category.title, 
-          image: category.image,
+          name: category.name, 
         }));
-
+    
+        console.log("Updated Categories:", categories.value); 
+    
       } catch (err) {
         console.error('Error fetching categories:', err);
         error.value = 'Failed to load categories';
@@ -26,6 +29,6 @@ export const useCategoryStore = defineStore('category', () => {
         loading.value = false;
       }
     };
-  
+    
     return { categories, loading, error, fetchCategories };
 });

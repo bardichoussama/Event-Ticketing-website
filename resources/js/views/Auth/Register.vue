@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -17,7 +16,7 @@ const handleRegister = async () => {
   try {
     await authStore.register(name.value, email.value, password.value, passwordConfirmation.value);
     alert('Registered successfully!');
-    router.push('/home');
+    router.push('/');
   } catch (error) {
     alert('Registration failed. Please try again.');
   }

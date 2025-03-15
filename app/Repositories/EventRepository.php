@@ -34,11 +34,32 @@ class EventRepository
                 $filters['end_date']
             ]);
         }
+          // Filter by event category
+          if (!empty($filters['category'])) {
+            $query->whereHas('event', function($q) use ($filters) {
+                $q->where('category_id', $filters['category']);
+            });
+        }
+        if (!empty($filters['event_timing'])) {
+            $currentDate = now();
+            if ($filters['event_timing'] == 'upcoming') {
+                $query->where('event_timestamp', '>', $currentDate);
+            } elseif ($filters['event_timing'] == 'past') {
+                $query->where('event_timestamp', '<', $currentDate);
+            }
+        }
+
+   
 
         return $query->get();
     }
-    public function findRecurrenceById(int $id)
+    public function findRecurrenceById( $id)
     {
         return Recurrence::with('event')->find($id);
     }
+    public function findWithRoom($id)
+{
+    return Recurrence::with('event', 'room')->find($id);
+}
+
 }

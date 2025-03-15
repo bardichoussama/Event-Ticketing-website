@@ -2,42 +2,52 @@
 namespace App\Repositories;
 
 use App\Models\Ticket;
+use App\Models\Reservation;
 
 class TicketRepository
 {
-    protected $ticket;
-
-    // Inject the Ticket model
-    public function __construct(Ticket $ticket)
-    {
-        $this->ticket = $ticket;
-    }
-
     public function createTickets($reservationId, $regularTickets, $discountTickets)
     {
-        $tickets = [];
-
+        // Create regular tickets
         for ($i = 0; $i < $regularTickets; $i++) {
-            $tickets[] = [
+            Ticket::create([
                 'reservation_id' => $reservationId,
                 'tariff_type' => 'regular',
-                'seat' => $i + 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+                'seat' => $this->getNextAvailableSeat($reservationId),
+            ]);
         }
-
+        
+        // Create discount tickets
         for ($i = 0; $i < $discountTickets; $i++) {
-            $tickets[] = [
+            Ticket::create([
                 'reservation_id' => $reservationId,
                 'tariff_type' => 'discount',
-                'seat' => $i + $regularTickets + 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+                'seat' => $this->getNextAvailableSeat($reservationId),
+            ]);
         }
-
-        $this->ticket->insert($tickets); 
+    }
+    public function countTicketsForRecurrence($recurrenceId)
+    {
+        return Ticket::whereHas('reservation', function ($query) use ($recurrenceId) {
+            $query->where('recurrence_id', $recurrenceId);
+        })->count();
+    }
+    
+    private function getNextAvailableSeat($reservationId)
+    {
+   
+        $reservation = Reservation::find($reservationId);
+        $recurrenceId = $reservation->recurrence_id;
+        
+        $takenSeats = Ticket::whereHas('reservation', function ($query) use ($recurrenceId) {
+            $query->where('recurrence_id', $recurrenceId);
+        })->pluck('seat')->toArray();
+        
+        $seat = 1;
+        while (in_array($seat, $takenSeats)) {
+            $seat++;
+        }
+        
+        return $seat;
     }
 }
-

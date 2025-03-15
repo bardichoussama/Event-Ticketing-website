@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class ReservationController extends Controller
 {
@@ -37,5 +38,15 @@ class ReservationController extends Controller
             'message' => 'Reservation successful!',
             'reservation_id' => $reservation->id
         ]);
+    }
+
+    public function checkAvailability($eventId)
+    {
+        try {
+            $result = $this->reservationService->getTicketAvailability($eventId);
+            return response()->json($result);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

@@ -13,5 +13,6 @@ class ReservationRepository
     {
         return $this->model->create($data);
     }
+   
     
 }
