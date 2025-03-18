@@ -1,11 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
+// Dynamically set the baseURL based on the environment
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api', 
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api",  // Default to localhost for dev
   headers: {
-    'Content-Type': 'application/json', 
+    "Content-Type": "application/json",
   },
-  withCredentials: true, 
+  withCredentials: true,
 });
 
 export default apiClient;
