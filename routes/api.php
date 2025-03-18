@@ -24,6 +24,3 @@ Route::get('/categories',[CategoryController::class,'index']);
 Route::get('/tickets/availability/{eventId}', [TicketAvailabilityController::class, 'checkAvailability']);
 Route::middleware('auth:sanctum')->post('/reservations', [ReservationController::class, 'store']);
 Route::get('/reservations/{userId}', [ReservationController::class, 'getUserReservations']);
-Route::get('/test', function () {
-    return response()->json(['message' => 'API is working!']);
-});
