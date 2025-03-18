@@ -2,20 +2,21 @@
 
 namespace App\Services;
 
-use App\Repositories\CategoryRepository;
+use App\Interfaces\ICategoryRepository;
 
 class CategoryService
 {
     protected $categoryRepository;
 
-    public function __construct( CategoryRepository $eventRepository)
+    public function __construct(ICategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = $eventRepository;
-    }
-     public function getAll()
-    {
-        return $this->categoryRepository->getAll();
+        $this->categoryRepository = $categoryRepository;
     }
 
-   
+    public function getAllCategories()
+    {
+        return $this->categoryRepository->getAllCategories();
+    }
+
+
 }

@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Recurrence;
+use App\Interfaces\IEventRepository;
 
-class EventRepository
+class EventRepository implements IEventRepository
 {
     protected $model;
 
@@ -55,11 +56,13 @@ class EventRepository
     }
     public function findRecurrenceById( $id)
     {
-        return Recurrence::with('event')->find($id);
+         return $this->model->with('event')->find($id);
     }
-    public function findWithRoom($id)
+    public function findRecurrenceWithRoom($id){
+        
 {
-    return Recurrence::with('event', 'room')->find($id);
+    return $this->model->with('event', 'room')->find($id);
 }
 
+}
 }

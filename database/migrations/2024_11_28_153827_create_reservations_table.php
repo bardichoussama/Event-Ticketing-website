@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
-            $table->foreignId('recurrence_id')->constrained('recurrences')->onDelete('cascade'); 
-            $table->date('reservation_date'); 
-            $table->timestamps();
-        });
+            Schema::create('reservations', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+                $table->foreignId('recurrence_id')->constrained('recurrences')->onDelete('cascade'); 
+                $table->date('reservation_date'); 
+                $table->timestamps();
+            });
     }
 
     /**

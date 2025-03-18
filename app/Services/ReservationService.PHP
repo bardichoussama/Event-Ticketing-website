@@ -4,31 +4,32 @@ namespace App\Services;
 
 use App\Models\Recurrence;
 use App\Models\Ticket;
-use App\Repositories\ReservationRepository;
 use App\Repositories\TicketRepository;
-use App\Repositories\EventRepository;
+use App\Interfaces\IReservationRepository;
+use App\Interfaces\IEventRepository;
+
 use Illuminate\Support\Facades\Auth;
 use Exception;
 
-class ReservationService
-{
+class ReservationService {
     protected $reservationRepository;
     protected $ticketRepository;
     protected $eventRepository;
 
-    public function __construct(ReservationRepository $reservationRepository, TicketRepository $ticketRepository, EventRepository $eventRepository)
+    public function __construct(IReservationRepository $reservationRepository, TicketRepository $ticketRepository, IEventRepository $eventRepository)
     {
         $this->reservationRepository = $reservationRepository;
         $this->ticketRepository = $ticketRepository;
         $this->eventRepository = $eventRepository;
     }
 
+
     public function makeReservation($eventId, $regularTickets, $discountTickets)
     {
         $user = Auth::user();
         $totalRequestedTickets = $regularTickets + $discountTickets;
 
-        $recurrence = $this->eventRepository->findWithRoom($eventId);
+        $recurrence = $this->eventRepository->findRecurrenceWithRoom($eventId);
         if (!$recurrence) {
             throw new Exception("Recurrence not found.");
         }
@@ -54,23 +55,32 @@ class ReservationService
 
         return $reservation;
     }
-
-    public function getTicketAvailability($eventId)
+    public function getUserReservations($userId)
     {
-        $recurrence = Recurrence::with('room')->find($eventId);
-        if (!$recurrence) {
-            throw new Exception('Recurrence not found.');
-        }
+        $reservations = $this->reservationRepository->getUserReservations($userId);
+        return $reservations->map(function ($reservation) {
+            $regularTickets = $reservation->tickets->where('tariff_type', 'regular')->count();
+            $discountTickets = $reservation->tickets->where('tariff_type', 'discount')->count();
 
-        $roomCapacity = $recurrence->room->capacity;
-        $existingTickets = Ticket::where('reservation_id', $eventId)->count();
-        $availableSeats = $roomCapacity - $existingTickets;
+            $regularPrice = $reservation->recurrence->event->regular_price;
+            $discountPrice = $reservation->recurrence->event->discount_price;
+            $totalPrice = ($regularTickets * $regularPrice) + ($discountTickets * $discountPrice);
 
-        return [
-            'recurrence' => $recurrence,
-            'available' => $availableSeats > 0,
-            'availableSeats' => $availableSeats,
-            'totalCapacity' => $roomCapacity
-        ];
+            return [
+                'user_id' => $reservation->user->id,
+                'user_name' => $reservation->user->name,
+                'user_email' => $reservation->user->email,
+                'purchase_date' => $reservation->created_at,
+                'reservation_id' => $reservation->id,
+                'event_title' => $reservation->recurrence->event->title,
+                'regular_price' => $regularPrice,
+                'discount_price' => $discountPrice,
+                'regular_tickets_count' => $regularTickets,
+                'discount_tickets_count' => $discountTickets,
+                'total_price' => $totalPrice,
+                'event_date' => $reservation->recurrence->event_timestamp,
+                'room_description' => $reservation->recurrence->room->description
+            ];
+        });
     }
-}
+    }

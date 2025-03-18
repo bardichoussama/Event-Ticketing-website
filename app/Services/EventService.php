@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\EventRepository;
+ use App\Interfaces\IEventRepository;
+
 
 class EventService
 {
     protected $eventRepository;
 
-    public function __construct(EventRepository $eventRepository)
+    public function __construct(IEventRepository $eventRepository)
     {
         $this->eventRepository = $eventRepository;
     }
@@ -21,7 +22,7 @@ class EventService
 
         return $this->eventRepository->getFilteredEvents($filters);
     }
-    
+
     public function getEventDetails(int $recurrenceId)
     {
         return $this->eventRepository->findRecurrenceById($recurrenceId);
