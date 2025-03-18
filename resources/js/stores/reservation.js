@@ -5,7 +5,7 @@ import apiClient from "../../axios";
 export const useReservationStore = defineStore('reservation', () => {
   const loading = ref(false);
   const error = ref(null);
-  const reservation = ref(null); // 
+  const reservation = ref(null); 
 
   const createReservation = async (eventId, regularTickets, discountTickets) => {
     loading.value = true;
@@ -18,7 +18,7 @@ export const useReservationStore = defineStore('reservation', () => {
         discount_tickets: discountTickets,
       });
       
-      reservation.value = response.data; // Store the reservation data
+      reservation.value = response.data;
       return response.data;
     } catch (err) {
       console.error("Error making reservation:", err);
@@ -29,26 +29,28 @@ export const useReservationStore = defineStore('reservation', () => {
     }
   };
 
-  const checkAvailability = async (eventId) => {
+  const getUserReservations = async (userId) => {
     loading.value = true;
     error.value = null;
     
     try {
-      const response = await apiClient.get(`/events/${eventId}/availability`);
-      availability.value = response.data;
+      const response = await apiClient.get(`/reservations/${userId}`);
+      reservation.value = response.data;
       return response.data;
     } catch (err) {
-      console.error("Error checking ticket availability:", err);
-      error.value = "Failed to check ticket availability.";
+      console.error("Error getting user reservations:", err);
+      error.value = "Failed to get user reservations.";
       return null;
     } finally {
       loading.value = false;
     }
   };
+
   
   return { 
     createReservation, 
     reservation, 
+    getUserReservations,
     loading, 
     error 
   };

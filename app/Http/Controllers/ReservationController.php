@@ -39,14 +39,11 @@ class ReservationController extends Controller
             'reservation_id' => $reservation->id
         ]);
     }
-
-    public function checkAvailability($eventId)
+    public function getUserReservations($userId)
     {
-        try {
-            $result = $this->reservationService->getTicketAvailability($eventId);
-            return response()->json($result);
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $reservations =  $this->reservationService->getUserReservations($userId);
+        return response()->json($reservations);
     }
+
+   
 }

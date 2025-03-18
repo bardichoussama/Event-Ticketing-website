@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Interfaces\ICategoryRepository;
 
-class CategoryRepository
+class CategoryRepository implements ICategoryRepository
 {
     protected $model;
 
@@ -17,6 +18,4 @@ class CategoryRepository
     {
         return $this->model->all();
     }
-
-    
 }

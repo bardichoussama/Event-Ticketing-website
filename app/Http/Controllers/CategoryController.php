@@ -4,23 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
-use App\Models\Category;
-
 
 class CategoryController extends Controller
 {
-    // protected $categoryRepository;
+    protected $categoryService;
 
-    // public function __construct(CategoryRepository $categoryRepository)
-    // {
-    //     $this->categoryRepository = $categoryRepository;
-    // }
-    // public function index()
-    // {
-    //     return response()->json($this->categoryRepository->getAllCategories());
-    // }
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     public function index()
-    {   
-        return response()->json( Category::all());
+    {
+        return response()->json($this->categoryService->getAllCategories());
     }
 }

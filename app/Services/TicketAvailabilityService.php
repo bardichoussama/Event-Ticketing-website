@@ -22,7 +22,7 @@ class TicketAvailabilityService
 
     public function getTicketAvailability($eventId)
     {
-        $recurrence = $this->eventRepository->findWithRoom($eventId);
+        $recurrence = $this->eventRepository->findRecurrenceWithRoom($eventId);
         if (!$recurrence) {
             throw new Exception('Recurrence not found.');
         }
