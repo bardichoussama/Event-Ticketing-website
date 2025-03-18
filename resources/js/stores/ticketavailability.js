@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import apiClient from '../../axios';
 
-export const useTicketAvailabilityStore = defineStore('ticketAvailability', () => {
+export const useTicketAvailabilityStore = defineStore('ticketavailability', () => {
     const loading = ref(false);
     const error = ref(null);
     const ticketAvailability = ref({ availableSeats: 0 });

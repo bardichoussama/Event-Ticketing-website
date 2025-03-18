@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from "vue";
 import { useEventDetailsStore } from "../../stores/eventDetails";
 import { useReservationStore } from "../../stores/reservation";
-import { useTicketAvailabilityStore } from "../../stores/ticketAvailability";
+import { useTicketAvailabilityStore } from "../../stores/ticketavailability";
 import { useAuthStore } from "../../stores/auth";
 import { useRoute } from "vue-router"; // ✅ Correct import
 import { useToast } from "@/components/ui/toast"; // ✅ FIXED IMPORT
