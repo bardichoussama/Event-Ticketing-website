@@ -9,11 +9,16 @@ class CategoriesTableSeeder extends Seeder
 {
     public function run()
     {
-        $categories = ['Music', 'Sports', 'Theater', 'Technology', 'Education'];
+        $categories = [
+            'Music', 
+            'Sports', 
+            'Theater', 
+            'Technology', 
+            'Education'
+        ];
 
-        foreach ($categories as $category) {
-            Category::create(['name' => $category]);
+        foreach ($categories as $categoryName) {
+            Category::create(['name' => $categoryName]);
         }
     }
 }
-

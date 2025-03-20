@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\TicketService;
 use Exception;
 
 class ReservationController extends Controller
 {
     protected $reservationService;
 
-    public function __construct(ReservationService $reservationService)
+    public function __construct(ReservationService $reservationService, TicketService $ticketService)
     {
         $this->reservationService = $reservationService;
+        $this->ticketService = $ticketService;
     }
 
     public function store(Request $request)
@@ -33,6 +35,8 @@ class ReservationController extends Controller
             $request->regular_tickets,
             $request->discount_tickets
         );
+
+        $this->ticketService->generateAndSendTickets($reservation);
 
         return response()->json([
             'message' => 'Reservation successful!',

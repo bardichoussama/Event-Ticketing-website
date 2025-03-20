@@ -12,7 +12,7 @@
         <div class="flex flex-col justify-between flex-grow">
           <!-- Date & Time (With Border) -->
           <div
-            class="flex flex-col sm:flex-row items-center p-1 border rounded-xl w-full md:w-48 justify-center text-gray-500 text-xs font-medium">
+            class="flex flex-col sm:flex-row items-center p-1 border rounded-xl w-full md:w-52 justify-center text-gray-500 text-xs font-medium">
             <div class="flex items-center gap-1">
               <CalendarIcon class="h-3 w-3 text-primary opacity-70 flex-shrink-0" />
               <p class="text-xs">{{ formatDate(event.event_timestamp) }}</p>
@@ -25,12 +25,12 @@
           </div>
 
           <!-- Title -->
-          <p class="text-xs md:text-sm font-medium text-gray-900 mt-1">{{ event.title }}</p>
+          <p class="text-sm md:text-base font-medium text-gray-900 mt-4">{{ event.title }}</p>
 
           <!-- Address -->
           <div class="mt-1 md:mt-4 flex items-center gap-1 text-gray-600 text-xs font-medium">
             <MapPinIcon class="h-3 w-3 text-primary opacity-70 flex-shrink-0" />
-            <p class="truncate text-xs">{{ event.address }}</p>
+            <p class="truncate text-sm">{{ event.address }}</p>
           </div>
         </div>
 
@@ -51,8 +51,7 @@
             </button>
           </router-link>
           <div class="text-center mt-1">
-            <span class="text-xs md:text-sm font-semibold text-gray-900">${{ event.discount_price }}</span>
-            <span class="text-xs text-gray-500 line-through ml-1">${{ event.regular_price }}</span>
+            <span class="text-xs md:text-sm font-semibold text-gray-900">${{ event.regular_price }}</span>
           </div>
         </div>
       </div>

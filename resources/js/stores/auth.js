@@ -57,6 +57,20 @@ export const useAuthStore = defineStore('auth', () => {
             throw error;
         }
     };
+    const updateProfile = async (formData) => {
+        try {
+            const response = await apiClient.post("/user/update", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+    
+            user.value = response.data.user;
+            console.log("Profile updated successfully!");
+        } catch (error) {
+            console.error("Profile update failed:", error.response?.data || error.message);
+            throw error;
+        }
+    };
+    
 
     // Logout Function
     const logout = async () => {
@@ -82,6 +96,7 @@ export const useAuthStore = defineStore('auth', () => {
             throw error;
         }
     };
+    
 
     // Fetch Authenticated User
     const fetchUser = async () => {
@@ -109,6 +124,7 @@ export const useAuthStore = defineStore('auth', () => {
         user,
         token,
         isAuthenticated,
+        updateProfile,
         login,
         register,
         logout,

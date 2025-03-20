@@ -13,6 +13,8 @@ class UsersTableSeeder extends Seeder
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
+            'phone' => '+919876543210',
+            'img' => 'user1.jpg',
             'password' => Hash::make('password'),
         ]);
     }
