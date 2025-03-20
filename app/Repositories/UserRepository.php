@@ -3,21 +3,43 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Interfaces\IUserRepository;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
-class UserRepository
-{
-    public function __construct(User $user)
+class UserRepository implements IUserRepository {
+
+    public function update($id, array $data)
     {
-        $this->user = $user;
-    }
-    public function all()
-    {
-        return $this->userModel::all();
-    }
-    public function update(User $user)
-    {
-        $this->userModel::update($user);
+        $user = User::find($id);
+
+        if (!$user) {
+            throw new \Exception("User not found.");
+        }
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->phone = $data['phone'] ?? $user->phone;
+
+        // Handle Image Upload
+        if (!empty($data['img'])) {
+            // Delete old image if it exists
+            if ($user->img && file_exists(public_path('assets/imgs/' . $user->img))) {
+                unlink(public_path('assets/imgs/' . $user->img));
+            }
+
+            // Move new image to public folder
+            $image = $data['img'];
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/imgs'), $imageName);
+            $user->img = $imageName;
+        }
+
+        // Handle password update securely
+        if (!empty($data['password'])) {
+            $user->password = Hash::make($data['password']);
+        }
+
+        $user->save();
+        return $user;
     }
 }

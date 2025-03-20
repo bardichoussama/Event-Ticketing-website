@@ -10,14 +10,21 @@ use App\Models\Room;
 class RecurrencesTableSeeder extends Seeder
 {
     public function run()
-    {
-        $event = Event::inRandomOrder()->first();
-        $room = Room::inRandomOrder()->first();
+    { $events = Event::all(); // Fetch all events
+        $rooms = Room::all(); // Fetch all rooms
 
-        Recurrence::create([
-            'event_id' => $event->id,
-            'room_id' => $room->id,
-            'event_timestamp' => now()->addDays(rand(1, 30)),
-        ]);
+        if ($events->isEmpty() || $rooms->isEmpty()) {
+            return; // Stop if no events or rooms exist
+        }
+
+        foreach ($events as $event) {
+            $room = $rooms->random(); // Pick a random room for each event
+
+            Recurrence::create([
+                'event_id' => $event->id,
+                'room_id' => $room->id,
+                'event_timestamp' => now()->addDays(rand(1, 30)),
+            ]);
+        }
     }
 }

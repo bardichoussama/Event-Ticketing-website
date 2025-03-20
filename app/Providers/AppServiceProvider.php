@@ -9,10 +9,13 @@ use App\Interfaces\ICategoryRepository;
 use App\Interfaces\IEventRepository;
 use App\Interfaces\IReservationRepository;
 use App\Interfaces\ITicketRepository;
+use App\Interfaces\IUserRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\ReservationRepository;
 use App\Repositories\TicketRepository;
+use App\Repositories\UserRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IEventRepository::class, EventRepository::class);
         $this->app->bind(IReservationRepository::class, ReservationRepository::class);
         $this->app->bind(ITicketRepository::class, TicketRepository::class);
+        $this->app->bind(IUserRepository::class, UserRepository::class);
     }
 
     /**

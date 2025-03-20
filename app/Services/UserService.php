@@ -2,12 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\Event;
-use App\Models\Reservation;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Interfaces\IUserRepository;
 
-class UserService
-{
-   
+class UserService {
+    protected $userRepository;
+    
+    public function __construct(IUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    public function updateUser($id, array $data)
+    {
+        return $this->userRepository->update($id, $data);
+    }
 }

@@ -4,7 +4,7 @@ import { useEventDetailsStore } from "../../stores/eventDetails";
 import { useReservationStore } from "../../stores/reservation";
 import { useTicketAvailabilityStore } from "../../stores/ticketavailability";
 import { useAuthStore } from "../../stores/auth";
-import { useRoute } from "vue-router"; // ✅ Correct import
+import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "@/components/ui/toast"; // ✅ FIXED IMPORT
 import { Loader2, AlertTriangle, CheckCircle } from 'lucide-vue-next';
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ const ticketAvailabilityStore = useTicketAvailabilityStore();
 const authStore = useAuthStore();
 const reservationStore = useReservationStore();
 
+const router = useRouter();
 const route = useRoute();
 // Ticket quantities
 const regularTickets = ref(0);
@@ -341,7 +342,7 @@ const formatTime = (timestamp) => {
           You need to log in to reserve tickets. Please sign in to continue.
         </DialogDescription>
         <DialogFooter class="mt-4">
-          <Button @click="router.push('/login')"
+          <Button @click="router.push('/login');"
             class="bg-gradient-to-r from-primary to-primary/90 text-white px-5 py-2 rounded-lg shadow-md hover:scale-105 transition-all hover:shadow-lg">
             🔑 Go to Login
           </Button>
