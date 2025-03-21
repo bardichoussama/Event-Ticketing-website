@@ -35,9 +35,6 @@ class ReservationController extends Controller
             $request->regular_tickets,
             $request->discount_tickets
         );
-
-       
-
         return response()->json([
             'message' => 'Reservation successful!',
             'reservation_id' => $reservation->id
@@ -45,9 +42,20 @@ class ReservationController extends Controller
     }
     public function getUserReservations($userId)
     {
-        $reservations =  $this->reservationService->getUserReservations($userId);
-        return response()->json($reservations);
+        try {
+            $reservations = $this->reservationService->getUserReservations($userId);
+            return response()->json($reservations);
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Reservation error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            
+            // Return a more helpful error response
+            return response()->json([
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ], 500);
+        }
     }
-
    
 }
