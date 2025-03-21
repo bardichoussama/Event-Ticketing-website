@@ -6,6 +6,7 @@ use App\Interfaces\IReservationRepository;
 
 class ReservationRepository  implements IReservationRepository
 {
+    protected $model;
     public function __construct(Reservation $model)
     {
         $this->model = $model;

@@ -25,9 +25,9 @@ class UserController extends Controller
 
         // Validate input
         $validatedData = $request->validate([
-            "name"  => 'required|string|max:255',
-            "email" => 'required|email|unique:users,email,' . $user->id,
-            "phone" => 'sometimes|string|min:6',
+            "name"  => '|string|max:255',
+            "email" => '|email|unique:users,email,' . $user->id,
+            "phone" => '|string|min:6',
             "password" => 'sometimes|string|min:6',
             "img" => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // Image validation
         ]);

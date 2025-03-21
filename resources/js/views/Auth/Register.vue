@@ -1,9 +1,12 @@
+
+
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox'; // Added missing import
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -24,48 +27,75 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-    <!-- Left Side (Form) -->
-    <div class="flex items-center justify-center py-12">
-      <div class="mx-auto grid w-[350px] gap-6">
-        <div class="grid gap-2 text-center">
-          <h1 class="text-3xl font-bold">Register</h1>
-          <p class="text-muted-foreground">
+  <div class="w-full min-h-screen flex flex-col lg:flex-row ">
+    <!-- Left Side (Form) - More compact -->
+    <div class="flex-1 flex items-center justify-center py-6 px-4 ">
+      <div class="mx-auto w-full max-w-[320px] space-y-4 bg-violet-50">
+        <div class="space-y-1 text-center">
+          <h1 class="text-xl font-bold">Register</h1>
+          <p class="text-xs text-muted-foreground">
             Create an account to get started
           </p>
         </div>
-        <form @submit.prevent="handleRegister" class="grid gap-4">
-          <div class="grid gap-2">
-            <Input v-model="name" type="text" placeholder="Name" required />
+
+        <form @submit.prevent="handleRegister" class="space-y-3 ">
+          <div class="space-y-3">
+            <div>
+              <Input id="name" v-model="name" type="text" placeholder="Name" required class="h-9 text-sm" />
+            </div>
+            
+            <div>
+              <Input id="email" v-model="email" type="email" placeholder="Email" required class="h-9 text-sm" />
+            </div>
+            
+            <div>
+              <Input id="password" v-model="password" type="password" placeholder="Password" required class="h-9 text-sm" />
+            </div>
+            
+            <div>
+              <Input id="passwordConfirmation" v-model="passwordConfirmation" type="password" placeholder="Confirm Password" required class="h-9 text-sm" />
+            </div>
           </div>
-          <div class="grid gap-2">
-            <Input v-model="email" type="email" placeholder="Email" required />
+
+          <div class="flex items-start space-x-2 text-xs">
+            <Checkbox id="terms" />
+            <label for="terms" class="text-xs text-gray-600 leading-tight">
+              I agree to the Terms of Service and Privacy Policy
+            </label>
           </div>
-          <div class="grid gap-2">
-            <Input v-model="password" type="password" placeholder="Password" required />
+          
+          <Button type="submit" class="w-full h-9 text-sm">Register</Button>
+          
+          <div class="relative my-2">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t"></div>
+            </div>
+            <div class="relative flex justify-center text-xs">
+              <span class="bg-white px-2 text-muted-foreground">Or</span>
+            </div>
           </div>
-          <div class="grid gap-2">
-            <Input v-model="passwordConfirmation" type="password" placeholder="Confirm Password" required />
-          </div>
-          <Button type="submit" class="w-full text-white">Register</Button>
-          <Button variant="outline" class="w-full">Register with Google</Button>
+          
+          <Button variant="outline" type="button" class="w-full h-9 text-sm">
+            <svg class="mr-2 h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+              <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
+              <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
+              <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
+              <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
+            </svg>
+            Register with Google
+          </Button>
         </form>
-        <div class="mt-4 text-center text-sm">
+
+        <div class="text-center text-xs">
           Already have an account?
-          <a href="#" class="underline">Login</a>
+          <a href="/login" class="font-medium text-primary hover:underline">Login</a>
         </div>
       </div>
     </div>
 
-    <!-- Right Side (Image) -->
-    <div class="hidden bg-muted lg:block">
-      <img
-        src=""
-        alt="Register Image"
-        width="1920"
-        height="1080"
-        class="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-      >
-    </div>
   </div>
 </template>
+
+
+
+

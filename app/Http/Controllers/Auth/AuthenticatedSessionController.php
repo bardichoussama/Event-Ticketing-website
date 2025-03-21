@@ -10,20 +10,21 @@ use Illuminate\Support\Facades\Auth;
 class AuthenticatedSessionController extends Controller
 {
     public function store(LoginRequest $request)
-    {
-        // Authenticate the user
-        $request->authenticate();
+{
+    $credentials = $request->only('email', 'password');
 
-        // Create a token for the user
-        $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Logged in successfully',
-            'user' => $user,
-            'token' => $token,
-        ]);
+    if (!Auth::attempt($credentials)) {
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
+    $user = Auth::user();
+    $token = $user->createToken('auth_token')->plainTextToken;
+
+    return response()->json([
+        'message' => 'Logged in successfully',
+        'user' => $user,
+        'token' => $token,
+    ]);
+}
 
     public function destroy(Request $request)
     {
