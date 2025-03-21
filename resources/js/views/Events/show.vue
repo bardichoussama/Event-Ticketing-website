@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { LoaderPinwheel } from "lucide-vue-next";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from '@/components/ui/dialog';
 
-const { toast } = useToast(); // ✅ Will now work correctly
+const { toast } = useToast(); 
 
 const eventDetailsStore = useEventDetailsStore();
 const ticketAvailabilityStore = useTicketAvailabilityStore();
@@ -132,9 +132,7 @@ const confirmReservation = async () => {
     });
 
     // Redirect to tickets page after a short delay
-    setTimeout(() => {
-      router.push('/user/purchases');
-    }, 1500);
+
 
     // Reset ticket quantities
     regularTickets.value = 0;
@@ -170,11 +168,10 @@ const formatTime = (timestamp) => {
 <template>
   <div class="bg-gray-50 min-h-screen">
     <!-- Breadcrumbs aligned with page content -->
-    <div class="container mx-auto max-w-6xl px-4 py-3">
-      <div class="text-sm text-gray-600 breadcrumbs">
-        <a href="/" class="hover:text-primary">Home</a> &gt;
-        <a href="/events" class="hover:text-primary">Event</a> &gt;
-        <span class="text-gray-800">Event details</span>
+    <div class="container  mx-auto max-w-6xl px-4 py-3">
+      <div class="text-sm  mt-4 text-gray-600 breadcrumbs">
+        <a href="/" class="hover:text-primary font-semibold">Home</a> &gt;
+        <span class="text-gray-800 text-primary">Event details</span>
       </div>
     </div>
 
@@ -190,14 +187,20 @@ const formatTime = (timestamp) => {
       <div class="flex flex-col md:flex-row gap-6">
         <!-- Event Details -->
         <div class="flex-1">
+          
           <div class="h-72 md:h-96">
             <img class="h-full w-full object-cover rounded-lg shadow-md"
               :src="getImageUrl(eventDetailsStore.eventDetails.image)" alt="Event Image" />
           </div>
+          <div class=" p-2   mt-4 font-semibold text-xl">
+            <p class="text-gray-700 leading-relaxed">{{ eventDetailsStore.eventDetails.title }}</p>
+          </div>  
 
           <!-- Event info row improved -->
+           
           <div
-            class="flex flex-col sm:flex-row justify-between items-center mt-6 mb-4 p-4 bg-white rounded-lg shadow-sm">
+            class="flex flex-col sm:flex-row justify-between items-center mt-6 mb-4 p-4 bg-violet-50 rounded-lg shadow-sm">
+            
             <div class="flex flex-col items-center mb-3 sm:mb-0">
               <p class="text-gray-500 text-sm">Event Date</p>
               <p class="font-medium">{{ formatDate(eventDetailsStore.eventDetails.event_date) }}</p>
@@ -218,99 +221,105 @@ const formatTime = (timestamp) => {
             </div>
           </div>
 
-          <div class="bg-white p-5 rounded-lg shadow-sm">
-            <h2 class="text-xl font-semibold mb-3 text-gray-800">Event Description</h2>
+
+          <div class="bg-violet-50 p-5 rounded-lg shadow-sm">
             <p class="text-gray-700 leading-relaxed">{{ eventDetailsStore.eventDetails.description }}</p>
           </div>
+          
         </div>
 
         <!-- Ticket Reservation -->
-        <div class="flex flex-col full md:w-1/3 p-6 rounded-lg shadow-md bg-white space-y-4">
-    <h3 class="text-xl font-semibold text-gray-800 border-b pb-2">Reserve Your Tickets</h3>
+        <div class="flex flex-col full md:w-1/3 p-6 rounded-lg  bg-violet-50 space-y-4">
+          <h3 class="text-xl font-semibold text-gray-800 border-b pb-2">Reserve Your Tickets</h3>
 
-    <!-- Loading state -->
-    <div v-if="ticketAvailabilityStore.loading" class="flex items-center justify-center h-64">
-      <div class="text-center">
-        <div class="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-        <p class="text-gray-500">Loading ticket information...</p>
-      </div>
-    </div>
-
-    <!-- Sold Out Message - Only show when loading is complete and seats are 0 -->
-    <div v-else-if="ticketAvailabilityStore.ticketAvailability.availableSeats === 0"
-      class="flex items-center justify-center h-64">
-      <div class="text-center">
-        <div class="text-red-600 text-3xl font-bold mb-2">🎟️ SOLD OUT</div>
-        <p class="text-gray-500">No tickets available for this event</p>
-      </div>
-    </div>
-
-    <!-- Event Ended Message -->
-    <div v-else-if="isEventPassed" class="flex items-center justify-center h-64">
-      <div class="text-center">
-        <div class="text-gray-600 text-3xl font-bold mb-2">🗓️ EVENT ENDED</div>
-        <p class="text-gray-500">This event has already taken place</p>
-      </div>
-    </div>
-
-    <!-- Ticket Selection (Only if Available and loading is complete) -->
-    <div v-else>
-      <div class="flex flex-col items-center justify-center gap-4">
-        <div class="flex items-center justify-between bg-violet-50 w-full px-4 py-4 rounded-xl">
-          <div class="flex flex-col">
-            <p class="font-medium text-gray-800">Regular Ticket</p>
-            <p class="text-green-500 font-semibold">${{ eventDetailsStore.eventDetails.regular_price }}</p>
+          <!-- Loading state -->
+          <div v-if="ticketAvailabilityStore.loading" class="flex items-center justify-center h-64">
+            <div class="text-center">
+              <div
+                class="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4">
+              </div>
+              <p class="text-gray-500">Loading ticket information...</p>
+            </div>
           </div>
 
-          <input v-model="regularTickets" type="number" min="0"
-            :max="ticketAvailabilityStore.ticketAvailability.availableSeats"
-            class="bg-white rounded-lg text-base p-2 w-20 text-center border border-gray-200" />
-        </div>
-
-        <div class="flex items-center justify-between bg-violet-50 w-full px-4 py-4 rounded-xl">
-          <div class="flex flex-col">
-            <p class="font-medium text-gray-800">Discount Ticket</p>
-            <p class="text-green-500 font-semibold">${{ eventDetailsStore.eventDetails.discount_price }}</p>
+          <!-- Sold Out Message - Only show when loading is complete and seats are 0 -->
+          <div v-else-if="ticketAvailabilityStore.ticketAvailability.availableSeats === 0"
+            class="flex items-center justify-center h-64">
+            <div class="text-center">
+              <div class="text-red-600 text-3xl font-bold mb-2">🎟️ SOLD OUT</div>
+              <p class="text-gray-500">No tickets available for this event</p>
+            </div>
           </div>
 
-          <input v-model="discountTickets" type="number" min="0"
-            :max="ticketAvailabilityStore.ticketAvailability.availableSeats"
-            class="bg-white rounded-lg text-base p-2 w-20 text-center border border-gray-200" />
+          <!-- Event Ended Message -->
+          <div v-else-if="isEventPassed" class="flex items-center justify-center h-64">
+            <div class="text-center">
+              <div class="text-gray-600 text-3xl font-bold mb-2">🗓️ EVENT ENDED</div>
+              <p class="text-gray-500">This event has already taken place</p>
+            </div>
+          </div>
+
+          <!-- Ticket Selection (Only if Available and loading is complete) -->
+          <div v-else>
+            <div class="flex flex-col items-center justify-center gap-4">
+              <div class="flex items-center justify-between bg-white w-full px-4 py-4 rounded-xl">
+                <div class="flex flex-col">
+                  <p class="font-medium text-gray-800">Regular Ticket</p>
+                  <p class="text-green-500 font-semibold">${{ eventDetailsStore.eventDetails.regular_price }}</p>
+                </div>
+
+                <input v-model="regularTickets" type="number" min="0"
+                  :max="ticketAvailabilityStore.ticketAvailability.availableSeats"
+                  class="bg-white rounded-lg text-base p-2 w-20 text-center border border-gray-200" />
+              </div>
+
+              <div class="flex items-center justify-between bg-white w-full px-4 py-4 rounded-xl">
+                <div class="flex flex-col">
+                  <p class="font-medium text-gray-800">Discount Ticket</p>
+                  <p class="text-green-500 font-semibold">${{ eventDetailsStore.eventDetails.discount_price }}</p>
+                </div>
+
+                <input v-model="discountTickets" type="number" min="0"
+                  :max="ticketAvailabilityStore.ticketAvailability.availableSeats"
+                  class="bg-white rounded-lg text-base p-2 w-20 text-center border border-gray-200" />
+              </div>
+            </div>
+
+            <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+              <div class="flex justify-between text-sm mb-2">
+                <p class="text-gray-600">Total seats:</p>
+                <p class="font-medium">{{ ticketAvailabilityStore.ticketAvailability.totalCapacity }}</p>
+              </div>
+              <div class="flex justify-between text-sm mb-2">
+                <p class="text-gray-600">Total Quantity:</p>
+                <p class="font-medium">{{ parseInt(regularTickets || 0) + parseInt(discountTickets || 0) }}</p>
+              </div>
+              <div class="flex justify-between text-base">
+                <p class="font-medium text-gray-800">Total price:</p>
+                <p class="font-bold text-primary"> ${{ totalPrice }}</p>
+              </div>
+            </div>
+            <div class="bg-white mt-4 p-4 rounded-lg ">
+              <p class="text-gray-600 text-center text-sm">⏳ Time left to the event: {{ countdown }}</p>
+            </div>
+
+       
+
+            <!-- Reserve Button -->
+            <button @click="reserveTickets" :class="[
+              'w-full py-3 rounded-lg  focus:outline-none focus:ring-2 focus:ring-primary flex items-center justify-center mt-4',
+              'bg-primary text-white hover:bg-primary/80'
+            ]">
+              <span class="font-semibold">Reserve Now</span>
+            </button>
+        
+            <div class="bg-white mt-4 p-4 rounded-lg text-center">
+              🎫 Remaining Tickets: <span class="font-bold">{{ ticketAvailabilityStore.ticketAvailability.availableSeats
+              }}</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-        <div class="flex justify-between text-sm mb-2">
-          <p class="text-gray-600">Total seats:</p>
-          <p class="font-medium">{{ ticketAvailabilityStore.ticketAvailability.totalCapacity }}</p>
-        </div>
-        <div class="flex justify-between text-sm mb-2">
-          <p class="text-gray-600">Total Quantity:</p>
-          <p class="font-medium">{{ parseInt(regularTickets || 0) + parseInt(discountTickets || 0) }}</p>
-        </div>
-        <div class="flex justify-between text-base">
-          <p class="font-medium text-gray-800">Total price:</p>
-          <p class="font-bold text-primary"> ${{ totalPrice }}</p>
-        </div>
-      </div>
-
-      <!-- Countdown -->
-      <p class="text-gray-600 text-center text-sm py-2">⏳ Time left to the event: {{ countdown }}</p>
-
-      <!-- Reserve Button -->
-      <button @click="reserveTickets" :class="[
-        'w-full py-3 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-primary flex items-center justify-center',
-        'bg-primary text-white hover:bg-primary/80'
-      ]">
-        <span class="font-semibold">Reserve Now</span>
-      </button>
-
-      <div class="text-gray-700 text-sm text-center mt-2">
-        🎫 Remaining Tickets: <span class="font-bold">{{ ticketAvailabilityStore.ticketAvailability.availableSeats }}</span>
-      </div>
-    </div>
-  </div>
-  </div>
     </div>
     <Dialog :open="showConfirmDialog" @update:open="showConfirmDialog = $event">
       <DialogContent>

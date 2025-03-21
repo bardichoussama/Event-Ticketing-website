@@ -60,10 +60,10 @@ const formatCurrency = (value) => {
 };
 
 // Calculate price per ticket
-const getPricePerTicket = (totalPrice, ticketCount) => {
-  if (!ticketCount || ticketCount <= 0) return 0;
-  return totalPrice / ticketCount;
-};
+// const getPricePerTicket = (totalPrice, ticketCount) => {
+//   if (!ticketCount || ticketCount <= 0) return 0;
+//   return totalPrice / ticketCount;
+// };
 
 const fetchReservations = async () => {
   loading.value = true;
@@ -243,7 +243,7 @@ onMounted(async () => {
                 class="hover:bg-gray-50 border-none">
                 <TableCell class="font-medium">{{ purchase.reservation_id }}</TableCell>
                 <TableCell>{{ purchase.event_title }}</TableCell>
-                <TableCell>{{ formatDate(purchase.event_date) }}</TableCell>
+                <TableCell>{{ formatDate(purchase.purchase_date) }}</TableCell>
                 <TableCell class="text-center">
                   <Badge variant="outline" class="font-mono">{{ purchase.regular_tickets_count }}</Badge>
                 </TableCell>
