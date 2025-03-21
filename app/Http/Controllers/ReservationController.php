@@ -26,10 +26,6 @@ class ReservationController extends Controller
             'discount_tickets' => 'required|integer|min:0',
         ]);
 
-        if (!Auth::check()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
         $reservation = $this->reservationService->makeReservation(
             $request->event_id,
             $request->regular_tickets,

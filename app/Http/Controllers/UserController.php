@@ -19,10 +19,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
-        }
-
+     
         // Validate input
         $validatedData = $request->validate([
             "name"  => '|string|max:255',
