@@ -17,7 +17,6 @@ class ReservationsTableSeeder extends Seeder
         Reservation::create([
             'user_id' => $user->id,
             'recurrence_id' => $recurrence->id,
-            'reservation_date' => now(),
         ]);
     }
 }

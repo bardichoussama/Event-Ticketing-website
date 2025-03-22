@@ -15,7 +15,6 @@ return new class extends Migration
                 $table->id();
                 $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
                 $table->foreignId('recurrence_id')->constrained('recurrences')->onDelete('cascade'); 
-                $table->date('reservation_date'); 
                 $table->timestamps();
             });
     }
