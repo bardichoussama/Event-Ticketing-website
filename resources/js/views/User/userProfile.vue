@@ -45,7 +45,7 @@
                 
                 <div>
                   <h3 class="text-sm font-medium text-gray-500">Member Since</h3>
-                  <p class="text-lg font-medium">{{ formatDate(authStore.user?.createdAt) }}</p>
+                  <p class="text-lg font-medium">{{ formatDate(authStore.user?.created_at) || 'Not set' }}</p>
                 </div>
               </div>
               
