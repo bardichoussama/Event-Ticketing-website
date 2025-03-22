@@ -20,6 +20,7 @@ class ReservationController extends Controller
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'event_id' => 'required|exists:recurrences,id',
             'regular_tickets' => 'required|integer|min:0',
