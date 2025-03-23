@@ -48,7 +48,6 @@ class ReservationService {
         $reservation = $this->reservationRepository->createReservation([
             'user_id' => $user->id,
             'recurrence_id' => $eventId,
-            'reservation_date' => now(),
         ]);
 
         $this->ticketRepository->createTickets($reservation->id, $regularTickets, $discountTickets);

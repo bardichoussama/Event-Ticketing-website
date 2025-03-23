@@ -88,7 +88,9 @@ const handleRegister = async () => {
 
         <div class="text-center text-xs">
           Already have an account?
-          <a href="/login" class="font-medium text-primary hover:underline">Login</a>
+          <router-link to="/login" class="text-primary hover:underline">
+            Sign in
+          </router-link>
         </div>
       </div>
     </div>

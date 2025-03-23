@@ -267,6 +267,7 @@
       const currentUser = { ...authStore.user };
       
       const formData = new FormData();
+      formData.append('_method', 'PATCH');
       
       // Always send required fields (name and email)
       formData.append("name", form.value.name);
