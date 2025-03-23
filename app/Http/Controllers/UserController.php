@@ -18,21 +18,20 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
-
-     
+    
         // Validate input
         $validatedData = $request->validate([
-            "name"  => '|string|max:255',
-            "email" => '|email|unique:users,email,' . $user->id,
-            "phone" => '|string|min:6',
-            "password" => 'sometimes|string|min:6',
-            "img" => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // Image validation
+            "name"  => "nullable|string|max:255",
+            "email" => "nullable|email|unique:users,email," . $user->id,
+            "phone" => "nullable|string|min:6",
+            "password" => "nullable|string|min:6",
+            "img" => "nullable|image|mimes:jpeg,png,jpg,gif|max:2048", // Image validation
         ]);
-
+    
         try {
-            // Pass the request data, including the image
+            // Pass the request data
             $updatedUser = $this->userService->updateUser($user->id, $validatedData);
-
+    
             return response()->json([
                 'success' => true,
                 'message' => 'User updated successfully.',
@@ -45,4 +44,5 @@ class UserController extends Controller
             ], 500);
         }
     }
+    
 }

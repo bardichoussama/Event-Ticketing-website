@@ -26,4 +26,5 @@ Route::get('/tickets/availability/{eventId}', [TicketAvailabilityController::cla
 Route::middleware('auth:sanctum')->post('/reservations', [ReservationController::class, 'store']); 
 Route::middleware('auth:sanctum')->get('/reservations/{userId}', [ReservationController::class, 'getUserReservations']);
 
-Route::middleware('auth:sanctum')->post('/user/update', [UserController::class, 'updateProfile']);
+Route::middleware('auth:sanctum')->patch('/user/update', [UserController::class, 'updateProfile']);
+
