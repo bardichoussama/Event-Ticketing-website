@@ -59,12 +59,35 @@ export const useAuthStore = defineStore('auth', () => {
     };
     const updateProfile = async (formData) => {
         try {
-            const response = await apiClient.post("/user/update", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+            // Store current token before update
+            const currentToken = token.value;
+            
+            // Make sure the token is in the headers
+            apiClient.defaults.headers.common['Authorization'] = `Bearer ${currentToken}`;
+            
+            // Create a new FormData instance to prevent browser interference
+            const cleanFormData = new FormData();
+            for (let [key, value] of formData.entries()) {
+                cleanFormData.append(key, value);
+            }
+            
+            const response = await apiClient.post("/user/update", cleanFormData, {
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    "X-Requested-With": "XMLHttpRequest" // Add this to indicate AJAX request
+                },
             });
     
+            // Update user data while maintaining authentication
             user.value = response.data.user;
+            token.value = currentToken;
+            isAuthenticated.value = true;
+            
+            // Ensure token is set in localStorage and API client
+            localStorage.setItem('token', currentToken);
+            
             console.log("Profile updated successfully!");
+            return response.data;
         } catch (error) {
             console.error("Profile update failed:", error.response?.data || error.message);
             throw error;

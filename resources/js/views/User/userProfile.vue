@@ -68,7 +68,7 @@
             </DialogDescription>
           </DialogHeader>
           
-          <form @submit.prevent="updateUser" enctype="multipart/form-data" class="space-y-4">
+          <form @submit.prevent="updateUser" enctype="multipart/form-data" class="space-y-4" autocomplete="off">
             <div class="grid gap-4 py-4">
               <div class="flex justify-center mb-4">
                 <div class="relative">
@@ -88,6 +88,7 @@
                       class="hidden" 
                       @change="handleFileUpload" 
                       accept="image/*"
+                      autocomplete="off"
                     />
                   </Label>
                 </div>
@@ -101,6 +102,7 @@
                     id="name" 
                     placeholder="Your full name"
                     required
+                    autocomplete="off"
                     :class="{ 'border-primary': isFieldChanged('name') }"
                   />
                   <p class="text-xs text-gray-500 mt-1">Current: {{ authStore.user?.name || 'Not set' }}</p>
@@ -114,6 +116,7 @@
                     type="email" 
                     placeholder="your.email@example.com"
                     required
+                    autocomplete="off"
                     :class="{ 'border-primary': isFieldChanged('email') }"
                   />
                   <p class="text-xs text-gray-500 mt-1">Current: {{ authStore.user?.email || 'Not set' }}</p>
@@ -126,6 +129,7 @@
                     id="phone" 
                     type="tel" 
                     placeholder="+1 (555) 123-4567"
+                    autocomplete="off"
                     :class="{ 'border-primary': isFieldChanged('phone') }"
                   />
                   <p class="text-xs text-gray-500 mt-1">Current: {{ authStore.user?.phone || 'Not set' }}</p>
@@ -138,6 +142,7 @@
                     id="password" 
                     type="password" 
                     placeholder="Leave blank to keep current password"
+                    autocomplete="new-password"
                     :class="{ 'border-primary': form.password }"
                   />
                 </div>
@@ -262,10 +267,18 @@
   // Update user profile
   const updateUser = async () => {
     try {
-      // Store the current token and user data before the update
-      const currentToken = localStorage.getItem('token');
-      const currentUser = { ...authStore.user };
-      
+      // If nothing has changed, don't submit
+      if (!hasChanges.value) {
+        toast({
+          title: "No Changes",
+          description: "No changes were made to your profile.",
+          variant: "info"
+        });
+        closeEditModal();
+        return;
+      }
+
+      // Create FormData object
       const formData = new FormData();
       formData.append('_method', 'PATCH');
       
@@ -286,23 +299,20 @@
         formData.append("img", form.value.img);
       }
       
-      // If nothing has changed, don't submit
-      if (!hasChanges.value) {
-        toast({
-          title: "No Changes",
-          description: "No changes were made to your profile.",
-          variant: "info"
-        });
-        closeEditModal();
-        return;
-      }
+      // Update profile
+      const response = await authStore.updateProfile(formData);
       
-      await authStore.updateProfile(formData);
+      // Update the form with the response data
+      form.value = {
+        name: response.user.name,
+        email: response.user.email,
+        phone: response.user.phone || "",
+        password: "",
+        img: null
+      };
       
-      // Ensure the token is still in localStorage after the update
-      if (currentToken) {
-        localStorage.setItem('token', currentToken);
-      }
+      // Update original form values
+      originalForm.value = { ...form.value };
       
       toast({
         title: "Success",
