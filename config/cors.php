@@ -15,11 +15,14 @@ return [
     |
     */
 
-  'paths' => ['api/*', 'sanctum/csrf-cookie'],
+  'paths' => ['api/*'],
+
+    'allowed_origins' => [
+        'https://event-ticketing-website-main-f1hgvp.laravel.cloud',
+        'http://event-ticketing-website-main-f1hgvp.laravel.cloud',
+    ],
 
     'allowed_methods' => ['*'],
-
-   'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
