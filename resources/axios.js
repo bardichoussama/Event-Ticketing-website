@@ -7,9 +7,9 @@ const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "X-Requested-With": "XMLHttpRequest"  // Add this for Laravel to recognize AJAX requests
+    "X-Requested-With": "XMLHttpRequest" 
   },
-  withCredentials: true  // Change this to true for Sanctum to work properly
+  withCredentials: true   
 });
 
 // Keep your token interceptor
